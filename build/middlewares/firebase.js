@@ -7,15 +7,14 @@ const firebase_admin_1 = __importDefault(require("firebase-admin"));
 const uuid_1 = require("uuid");
 const DIR_1 = __importDefault(require("../configs/constants/DIR"));
 const UnlinkAsync_1 = __importDefault(require("../functions/UnlinkAsync"));
-/**
-    * Public
-*/
-const firebase_adminsdk_json_1 = __importDefault(require("../../etc/secrets/firebase-adminsdk.json"));
 const Users_1 = __importDefault(require("../models/Users"));
-const projectIdName = firebase_adminsdk_json_1.default.project_id;
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+serviceAccount.private_key =
+    serviceAccount.private_key.replace(/\\n/g, '\n');
+const projectIdName = serviceAccount.project_id;
 const admin = firebase_admin_1.default.initializeApp({
     //@ts-ignore
-    credential: firebase_admin_1.default.credential.cert(firebase_adminsdk_json_1.default),
+    credential: firebase_admin_1.default.credential.cert(serviceAccount),
 }, 'default');
 const storageRef = admin.storage().bucket(`gs://${projectIdName}.firebasestorage.app`);
 async function uploadFile(path, destination) {

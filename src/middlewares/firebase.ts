@@ -3,12 +3,14 @@ import { v4 as uuidv4 } from 'uuid';
 import DIR from '../configs/constants/DIR';
 import UnlinkAsync from '../functions/UnlinkAsync';
 import { Request, Response } from 'express';
-/**
-    * Public
-*/
-import serviceAccount from '../../etc/secrets/firebase-adminsdk.json';
-
 import Users from '../models/Users';
+
+const serviceAccount = JSON.parse(
+  process.env.FIREBASE_SERVICE_ACCOUNT!
+);
+
+serviceAccount.private_key =
+  serviceAccount.private_key.replace(/\\n/g, '\n');
 
 const projectIdName = serviceAccount.project_id
 
