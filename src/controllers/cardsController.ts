@@ -53,9 +53,9 @@ const cardsController = {
             * Se o city_id for undefined precisa trocar o sinal de = para != 0.
         */
         function locationQuery() {
-            let locationQ = 'WHERE (city_id != 0)'
+            let locationQ = 'WHERE (works.city_id != 0)'
             if (!isNaN(parseInt(`${location}`)))
-                locationQ = `WHERE (city_id = ${location})`
+                locationQ = `WHERE (works.city_id = ${location})`
             return locationQ;
         };
 
